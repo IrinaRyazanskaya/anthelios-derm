@@ -20,6 +20,13 @@
   flex-direction: column;
   max-width: 640px;
   gap: 118px;
+  position: relative;
+}
+
+.intro__body {
+  display: flex;
+  flex-direction: column;
+  gap: 118px;
 }
 
 .intro__header {
@@ -92,11 +99,12 @@
 
 .intro__texture {
   position: absolute;
-  top: 30px;
-  left: 214px;
-  width: 100%;
+  top: -136px;
+  left: 56px;
+  width: 1524px;
+  height: 1256px;
   object-fit: cover;
-  transform: scale(1.1);
+  transform-origin: center;
   z-index: -1;
   pointer-events: none;
   user-select: none;
@@ -110,4 +118,34 @@
   height: auto;
   pointer-events: none;
   user-select: none;
+}
+
+html.js .intro__texture {
+  transition: opacity 1000ms ease, transform 2000ms ease;
+  will-change: opacity, transform;
+}
+
+html.js .intro__product {
+  transition: opacity 800ms ease, transform 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+html.js .intro__body {
+  transition: opacity 800ms ease, transform 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+html.js .intro__texture.is-hidden {
+  opacity: 0;
+  transform: scale(0.85);
+}
+
+html.js .intro__product.is-hidden {
+  opacity: 0;
+  transform: translateY(140px);
+}
+
+html.js .intro__body.is-hidden {
+  opacity: 0;
+  transform: translateX(-90px);
 }
