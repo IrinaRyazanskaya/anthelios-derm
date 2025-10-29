@@ -1,0 +1,43 @@
+:root {
+  --slide-width: 1366px;
+  --slide-height: 1024px;
+  --bg-color: #f1f4f9;
+  --text-color: #000000;
+  --accent: #ff9a00;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("./fonts/Gilroy-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("./fonts/Gilroy-Extrabold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--text-color);
+  font-family: "Gilroy", Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
