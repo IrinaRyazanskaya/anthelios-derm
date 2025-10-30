@@ -6,6 +6,7 @@ const TEXTURE_FADE_DURATION = 1000;
  * продукта и текста. Пропускает анимацию при включённом prefers-reduced-motion.
  */
 function runIntroAnimation() {
+  // Проверяем настройки доступности: если пользователь отключил анимации, то не запускаем их
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     return;
   }
@@ -20,21 +21,28 @@ function runIntroAnimation() {
   const product = slide.querySelector('.intro__product');
   const text = slide.querySelector('.intro__body');
   
+  // Фильтруем только существующие элементы (удаляем null/undefined из массива)
   const elements = [texture, product, text].filter(Boolean);
   
   if (!elements.length) {
     return;
   }
 
+  // Скрываем все элементы мгновенно (без CSS-переходов) перед началом анимации
   for (const target of elements) {
     hideWithoutTransition(target);
   }
 
+  // Используем requestAnimationFrame для синхронизации с циклом отрисовки браузера.
+  // Это гарантирует, что браузер применил изменения (is-hidden) перед началом анимации
   requestAnimationFrame(() => {
+    // Первый этап: показываем текстуру
     if (texture) {
       texture.classList.remove('is-hidden');
     }
 
+    // Второй этап: показываем продукт и текст после завершения анимации текстуры
+    // Задержка = время анимации текстуры + дополнительная пауза между этапами
     window.setTimeout(() => {
       [product, text].forEach((element) => {
         if (element) {
@@ -52,19 +60,29 @@ function runIntroAnimation() {
 function hideWithoutTransition(element) {
   const originalTransition = element.style.transition;
 
+  // Отключаем все CSS-переходы для мгновенного изменения стилей
   element.style.transition = 'none';
   element.classList.add('is-hidden');
 
-  // Принудительно запускаем reflow, чтобы анимации стартовали заново
+  // Принудительно запускаем reflow (пересчёт layout браузером) через чтение offsetWidth.
+  // Это гарантирует, что браузер применит изменения (transition: none и is-hidden)
+  // до восстановления transition, чтобы анимация стартовала корректно с нового состояния
   element.offsetWidth;
 
+  // Восстанавливаем оригинальные настройки transition
   element.style.transition = originalTransition;
 };
 
+// Обработчик события pageshow срабатывает при показе страницы из кэша.
+//
+// event.persisted === true означает, что страница восстановлена из Back-Forward Cache
+// (например, при навигации кнопками назад/вперёд). В этом случае событие DOMContentLoaded
+// не срабатывает, поэтому перезапускаем анимацию вручную для корректного отображения.
 window.addEventListener('pageshow', (event) => {
   if (event.persisted) {
     runIntroAnimation();
   }
 });
 
+// Запускаем анимацию при первой загрузке страницы
 document.addEventListener('DOMContentLoaded', runIntroAnimation);
