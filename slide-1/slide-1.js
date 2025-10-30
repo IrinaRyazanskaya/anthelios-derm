@@ -1,6 +1,9 @@
 const AFTER_TEXTURE_DELAY = 120;
 const TEXTURE_FADE_DURATION = 1000;
 
+// Идентификатор активного таймера второй фазы анимации (показ продукта и текста)
+let introTimeoutId = null;
+
 /**
  * Запускает анимацию появления элементов слайда с последовательным показом текстуры,
  * продукта и текста. Пропускает анимацию при включённом prefers-reduced-motion.
@@ -43,12 +46,20 @@ function runIntroAnimation() {
 
     // Второй этап: показываем продукт и текст после завершения анимации текстуры
     // Задержка = время анимации текстуры + дополнительная пауза между этапами
-    window.setTimeout(() => {
+    // Если introTimeout ещё активен, сбрасываем его, чтобы не сработал старый
+    if (introTimeoutId !== null) {
+      window.clearTimeout(introTimeoutId);
+    }
+
+    // Запоминаем id нового introTimeout и запускаем отсчёт до появления продукта и текста
+    introTimeoutId = window.setTimeout(() => {
       for (const element of [product, text]) {
         if (element) {
           element.classList.remove('is-hidden');
         }
       }
+      // Отмечаем, что показ анимации завершён и таймер больше не активен
+      introTimeoutId = null;
     }, TEXTURE_FADE_DURATION + AFTER_TEXTURE_DELAY);
   });
 };
@@ -67,7 +78,7 @@ function hideWithoutTransition(element) {
   // Принудительно запускаем reflow (пересчёт layout браузером) через чтение offsetWidth.
   // Это гарантирует, что браузер применит изменения (transition: none и is-hidden)
   // до восстановления transition, чтобы анимация стартовала корректно с нового состояния
-  element.offsetWidth;
+  void element.offsetWidth;
 
   // Восстанавливаем оригинальные настройки transition
   element.style.transition = originalTransition;
