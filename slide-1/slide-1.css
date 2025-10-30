@@ -16,11 +16,10 @@
 }
 
 .intro {
+  position: relative;
   display: flex;
   flex-direction: column;
-  max-width: 640px;
   gap: 118px;
-  position: relative;
 }
 
 .intro__body {
@@ -99,8 +98,8 @@
 
 .intro__texture {
   position: absolute;
-  top: -136px;
-  left: 56px;
+  top: -3%;
+  left: 10%;
   width: 1524px;
   height: 1256px;
   object-fit: cover;
@@ -112,8 +111,8 @@
 
 .intro__product {
   position: absolute;
-  top: 74px;
-  right: 60px;
+  top: -6%;
+  right: -2%;
   width: 584px;
   height: auto;
   pointer-events: none;
