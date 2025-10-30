@@ -44,11 +44,11 @@ function runIntroAnimation() {
     // Второй этап: показываем продукт и текст после завершения анимации текстуры
     // Задержка = время анимации текстуры + дополнительная пауза между этапами
     window.setTimeout(() => {
-      [product, text].forEach((element) => {
+      for (const element of [product, text]) {
         if (element) {
           element.classList.remove('is-hidden');
         }
-      });
+      }
     }, TEXTURE_FADE_DURATION + AFTER_TEXTURE_DELAY);
   });
 };
