@@ -1,4 +1,4 @@
-const SLIDE_ID = "slide-1";
+const SLIDE_ID = "anthelios-derm-001";
 const PRODUCT_NAME = "Anthelios 100 KA+";
 
 const AFTER_TEXTURE_DELAY = 120;
