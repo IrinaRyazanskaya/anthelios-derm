@@ -37,11 +37,11 @@ function runIntroAnimation() {
   }
 
   // Используем requestAnimationFrame для синхронизации с циклом отрисовки браузера.
-  // Это гарантирует, что браузер применил изменения (is-hidden) перед началом анимации
+  // Это гарантирует, что браузер применил скрывающий модификатор перед началом анимации
   requestAnimationFrame(() => {
     // Первый этап: показываем текстуру
     if (texture) {
-      texture.classList.remove("is-hidden");
+      removeHiddenClass(texture);
     }
 
     // Второй этап: показываем продукт и текст после завершения анимации текстуры
@@ -55,7 +55,7 @@ function runIntroAnimation() {
     introTimeoutId = window.setTimeout(() => {
       for (const element of [product, text]) {
         if (element) {
-          element.classList.remove("is-hidden");
+          removeHiddenClass(element);
         }
       }
       // Отмечаем, что показ анимации завершён и таймер больше не активен
@@ -65,23 +65,49 @@ function runIntroAnimation() {
 }
 
 /**
- * Скрывает элемент без проигрывания CSS-переходов, добавляя класс is-hidden.
+ * Скрывает элемент без проигрывания CSS-переходов, добавляя модификатор скрытия.
  * Временно отключает transition для мгновенного применения стилей, затем восстанавливает.
  */
 function hideWithoutTransition(element) {
+  const hiddenClass = getHiddenClass(element);
+
+  if (!hiddenClass) {
+    return;
+  }
+
   const originalTransition = element.style.transition;
 
   // Отключаем все CSS-переходы для мгновенного изменения стилей
   element.style.transition = "none";
-  element.classList.add("is-hidden");
+  element.classList.add(hiddenClass);
 
   // Принудительно запускаем reflow (пересчёт layout браузером) через чтение offsetWidth.
-  // Это гарантирует, что браузер применит изменения (transition: none и is-hidden)
+  // Это гарантирует, что браузер применит изменения (transition: none и скрывающий модификатор)
   // до восстановления transition, чтобы анимация стартовала корректно с нового состояния
   void element.offsetWidth;
 
   // Восстанавливаем оригинальные настройки transition
   element.style.transition = originalTransition;
+}
+
+/**
+ * Возвращает CSS-класс скрытия для элемента из data-атрибута если он не задан
+ */
+function getHiddenClass(element) {
+  return element.dataset.hiddenClass || "";
+}
+
+/**
+ * Удаляет CSS-класс скрытия с элемента, если он задан.
+ */
+function removeHiddenClass(element) {
+  const hiddenClass = getHiddenClass(element);
+
+  if (!hiddenClass) {
+    return;
+  }
+
+  element.classList.remove(hiddenClass);
 }
 
 // Обработчик события pageshow срабатывает при показе страницы из кэша.
