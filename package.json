@@ -1,0 +1,26 @@
+{
+  "name": "anthelios-derm",
+  "version": "1.0.0",
+  "private": "true",
+  "type": "module",
+  "scripts": {
+    "start": "serve",
+    "format": "prettier --write .",
+    "lint": "npm run lint:js && npm run lint:styles",
+    "lint:js": "eslint .",
+    "lint:styles": "stylelint '**/*.css'",
+    "lint-fix": "npm run lint-fix:js && npm run lint-fix:styles",
+    "lint-fix:js": "eslint --fix .",
+    "lint-fix:styles": "stylelint --fix '**/*.css'"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.0.0",
+    "serve": "^14.0.0",
+    "stylelint": "^16.0.0",
+    "stylelint-config-clean-order": "^7.0.0",
+    "stylelint-config-standard": "^39.0.0"
+  }
+}

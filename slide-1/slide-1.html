@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <title>Anthelios 100 KA+</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <script>
-      document.documentElement.classList.add('js');
+      document.documentElement.classList.add("js");
     </script>
     <link rel="stylesheet" href="../styles.css" />
     <link rel="stylesheet" href="./slide-1.css" />
@@ -14,7 +14,7 @@
     <main class="slide" role="presentation" aria-label="Слайд Anthelios 100 KA+">
       <div class="slide__content">
         <section class="intro">
-          <div class="intro__body">
+          <div class="intro__body" data-hidden-class="intro__body_hidden">
             <header class="intro__header">
               <h1 class="intro__title" aria-label="Anthelios 100 KA+">
                 <span class="intro__title-word">Anthelios</span>
@@ -27,26 +27,28 @@
             </header>
             <ul class="benefits" aria-label="Преимущества">
               <li class="benefits__item">
-                Специально разработанное<br> для кожи, наиболее чувствительной<br> к UV-излучению,
-                в том числе<br> и для обладателей I и II фототипов
+                Специально разработанное<br />
+                для кожи, наиболее чувствительной<br />
+                к UV-излучению, в том числе<br />
+                и для обладателей I и II фототипов
               </li>
-              <li class="benefits__item">
-                Защищает, восстанавливает, ускоряет репарацию
-              </li>
+              <li class="benefits__item">Защищает, восстанавливает, ускоряет репарацию</li>
             </ul>
           </div>
           <img
             class="intro__product"
             src="./images/cream.png"
             alt="Тюбик крема Anthelios 100 KA+"
+            data-hidden-class="intro__product_hidden"
+          />
+          <img
+            class="intro__texture"
+            src="./images/cream-texture.png"
+            alt="Текстура крема"
+            aria-hidden="true"
+            data-hidden-class="intro__texture_hidden"
           />
         </section>
-        <img
-          class="intro__texture"
-          src="./images/cream-texture.png"
-          alt=""
-          aria-hidden="true"
-        />
       </div>
     </main>
     <script defer src="./slide-1.js"></script>

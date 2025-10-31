@@ -2,24 +2,24 @@
   --slide-width: 1366px;
   --slide-height: 1024px;
   --bg-color: #f1f4f9;
-  --text-color: #000000;
+  --text-color: #000;
   --accent: #ff9a00;
 }
 
 @font-face {
-  font-family: "Gilroy";
-  src: url("./fonts/Gilroy-Light.woff2") format("woff2");
+  font-family: Gilroy;
   font-weight: 300;
   font-style: normal;
   font-display: swap;
+  src: url("./fonts/Gilroy-Light.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "Gilroy";
-  src: url("./fonts/Gilroy-Extrabold.woff2") format("woff2");
+  font-family: Gilroy;
   font-weight: 800;
   font-style: normal;
   font-display: swap;
+  src: url("./fonts/Gilroy-Extrabold.woff2") format("woff2");
 }
 
 *,
@@ -34,10 +34,12 @@ body {
 }
 
 body {
-  margin: 0;
-  color: var(--text-color);
-  font-family: "Gilroy", Arial, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  margin: 0;
+
+  font-family: Gilroy, Arial, sans-serif;
+  color: var(--text-color);
 }
