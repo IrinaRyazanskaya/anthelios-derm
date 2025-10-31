@@ -1,3 +1,6 @@
+const SLIDE_ID = "slide-1";
+const PRODUCT_NAME = "Anthelios 100 KA+";
+
 const AFTER_TEXTURE_DELAY = 120;
 const TEXTURE_FADE_DURATION = 1000;
 
@@ -110,6 +113,35 @@ function removeHiddenClass(element) {
   element.classList.remove(hiddenClass);
 }
 
+/**
+ * Фиксирует факт открытия текущего слайда.
+ */
+function sendOpenSlideEvent() {
+  postStatisticsEvent({
+    eventType: "openSlide",
+    slide: SLIDE_ID,
+    product: PRODUCT_NAME,
+  });
+}
+
+/**
+ * Отправляет событие статистики.
+ */
+function postStatisticsEvent(dataJSON) {
+  const target = window.ReactNativeWebView;
+
+  if (!target || typeof target.postMessage !== "function") {
+    return;
+  }
+
+  const payload = {
+    dataJSON,
+    enterTime: Date.now(),
+  };
+
+  target.postMessage(JSON.stringify(payload));
+}
+
 // Обработчик события pageshow срабатывает при показе страницы из кэша.
 //
 // event.persisted === true означает, что страница восстановлена из Back-Forward Cache
@@ -118,8 +150,12 @@ function removeHiddenClass(element) {
 window.addEventListener("pageshow", (event) => {
   if (event.persisted) {
     runIntroAnimation();
+    sendOpenSlideEvent();
   }
 });
 
-// Запускаем анимацию при первой загрузке страницы
-document.addEventListener("DOMContentLoaded", runIntroAnimation);
+// Запускаем анимацию и фиксируем открытие слайда при первой загрузке страницы
+document.addEventListener("DOMContentLoaded", () => {
+  runIntroAnimation();
+  sendOpenSlideEvent();
+});
